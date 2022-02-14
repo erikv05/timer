@@ -18,14 +18,14 @@ import org.overlake.mat803.fragmentexample.databinding.FragmentCountdownTimerBin
  */
 public class CountdownTimerFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public static final String TIME = "time";
+    public static final String TIMER_DONE = "timer_done";
 
-    // TODO: Rename and change types of parameters
-    private String mText;
-    private String mParam2;
+
+    private int mTime;
+
     private FragmentCountdownTimerBinding mBinding;
     private CountDownTimer mTimer;
 
@@ -33,20 +33,11 @@ public class CountdownTimerFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BlankFragment.
-     */
-    //TODO stuff
-    public static CountdownTimerFragment newInstance(String param1, String param2) {
+
+    public static CountdownTimerFragment newInstance(int time) {
         CountdownTimerFragment fragment = new CountdownTimerFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(TIME, time);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,18 +46,21 @@ public class CountdownTimerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mText = getArguments().getString("initial_string");
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mTime = getArguments().getInt(TIME);
+
         }
-        mTimer = new CountDownTimer(10000, 1000) {
+
+
+
+        mTimer = new CountDownTimer(mTime*1000, 1000) {
             @Override
             public void onTick(long l) {
-
+                mBinding.timerTime.setText(String.valueOf(l/1000));
             }
 
             @Override
             public void onFinish() {
-
+                getParentFragmentManager().setFragmentResult(TIMER_DONE, null);
             }
         };
 
@@ -78,6 +72,12 @@ public class CountdownTimerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_countdown_timer, container, false);
+        mBinding = FragmentCountdownTimerBinding.inflate(getLayoutInflater());
+        mBinding.timerTime.setText(String.valueOf(mTime));
+        return mBinding.getRoot();
+    }
+
+    public void start() {
+        mTimer.start();
     }
 }

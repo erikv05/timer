@@ -7,10 +7,11 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/countdownTimerValue"
+        android:id="@+id/timer_time"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="0"
-        android:textSize="140dp" />
+        android:gravity="center"
+        android:textSize="120dp"
+        tools:text="0" />
 
 </FrameLayout>
