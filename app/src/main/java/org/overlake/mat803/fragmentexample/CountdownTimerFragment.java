@@ -19,7 +19,6 @@ import org.overlake.mat803.fragmentexample.databinding.FragmentCountdownTimerBin
 public class CountdownTimerFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
     public static final String TIME = "time";
     public static final String TIMER_DONE = "timer_done";
 
@@ -55,12 +54,13 @@ public class CountdownTimerFragment extends Fragment {
         mTimer = new CountDownTimer(mTime*1000, 1000) {
             @Override
             public void onTick(long l) {
-                mBinding.timerTime.setText(String.valueOf(l/1000));
+                mBinding.timerTime.setText(String.valueOf(l/1000 + 1));
             }
 
             @Override
             public void onFinish() {
                 getParentFragmentManager().setFragmentResult(TIMER_DONE, null);
+                mBinding.timerTime.setText("0");
             }
         };
 
