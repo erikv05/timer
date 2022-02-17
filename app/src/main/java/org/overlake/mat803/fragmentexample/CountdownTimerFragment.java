@@ -3,6 +3,7 @@ package org.overlake.mat803.fragmentexample;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import java.lang.Math;
 
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -55,12 +56,14 @@ public class CountdownTimerFragment extends Fragment {
             @Override
             public void onTick(long l) {
                 mBinding.timerTime.setText(String.valueOf(l/1000 + 1));
+                System.out.println(l);
             }
 
             @Override
             public void onFinish() {
                 getParentFragmentManager().setFragmentResult(TIMER_DONE, null);
                 mBinding.timerTime.setText("0");
+                MainActivity.setReset();
             }
         };
 

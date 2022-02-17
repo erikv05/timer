@@ -14,29 +14,37 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static ActivityMainBinding mBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
         FragmentManager fm = getSupportFragmentManager();
         CountdownTimerFragment fragment = CountdownTimerFragment.newInstance(5);
         fm.beginTransaction()
                 .add(R.id.fragmentContainerView, fragment)
                 .commit();
-        binding.startButton.setOnClickListener(new View.OnClickListener() {
+        mBinding.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fragment.start();
-                binding.timerDoneText.setVisibility(View.INVISIBLE);
+                mBinding.timerDoneText.setVisibility(View.INVISIBLE);
             }
         });
         fm.setFragmentResultListener(CountdownTimerFragment.TIMER_DONE, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                binding.timerDoneText.setVisibility(View.VISIBLE);
+                mBinding.timerDoneText.setVisibility(View.VISIBLE);
             }
         });
+
+
+    }
+
+    public static void setReset() {
+        mBinding.startButton.setText("Reset");
     }
 
 }
