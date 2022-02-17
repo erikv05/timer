@@ -33,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
                 mBinding.timerDoneText.setVisibility(View.INVISIBLE);
             }
         });
+        mBinding.resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mBinding.startButton.setVisibility(View.VISIBLE);
+                mBinding.resetButton.setVisibility(View.INVISIBLE);
+                mBinding.timerDoneText.setVisibility(View.INVISIBLE);
+                fragment.resetTime();
+            }
+        });
         fm.setFragmentResultListener(CountdownTimerFragment.TIMER_DONE, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
@@ -43,8 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static void setReset() {
-        mBinding.startButton.setText("Reset");
+    public static void showReset() {
+        mBinding.startButton.setVisibility(View.INVISIBLE);
+        mBinding.resetButton.setVisibility(View.VISIBLE);
     }
 
 }

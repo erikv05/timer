@@ -63,7 +63,7 @@ public class CountdownTimerFragment extends Fragment {
             public void onFinish() {
                 getParentFragmentManager().setFragmentResult(TIMER_DONE, null);
                 mBinding.timerTime.setText("0");
-                MainActivity.setReset();
+                MainActivity.showReset();
             }
         };
 
@@ -82,5 +82,9 @@ public class CountdownTimerFragment extends Fragment {
 
     public void start() {
         mTimer.start();
+    }
+
+    public void resetTime() {
+        mBinding.timerTime.setText("5");
     }
 }
